@@ -1,6 +1,7 @@
 name: Update Fork
 
 on:
+  workflow_dispatch:  # 手動で実行可能にする
   schedule:
     - cron: '0 1 * * *'  # 毎日午前1時に実行（UTC）
 
