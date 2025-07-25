@@ -1,0 +1,36 @@
+name: Update Fork
+
+on:
+  schedule:
+    - cron: '0 1 * * *'  # 毎日午前1時に実行（UTC）
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0  # 全ての履歴を取得
+
+      - name: Set up Git
+        run: |
+          git config user.name "0521nao80"
+          git config user.email "0521nao80@gmail.com"
+
+      - name: Fetch upstream
+        run: |
+          git remote add upstream https://github.com/GitHub30/extend-vps-exp.git
+          git fetch upstream
+
+      - name: Merge upstream changes
+        run: |
+          git checkout main  # または使用しているブランチ
+          git merge upstream/main  # または使用しているブランチ
+
+      - name: Push changes
+        run: |
+          git push origin main  # 変更を自分のリポジトリにプッシュ
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
